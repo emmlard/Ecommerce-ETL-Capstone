@@ -1,0 +1,57 @@
+
+# Suggested Feature Branches for Capstone Project
+
+1. **data-ingestion**
+   - **Tasks**: 
+     - Download the dataset from Kaggle.
+     - Set up PostgreSQL using Docker & Docker Compose.
+     - Create tables in PostgreSQL.
+     - Ingest data into PostgreSQL tables.
+
+2. **setup-airflow**
+   - **Tasks**: 
+     - Add Airflow to your Docker Compose setup.
+     - Create and configure Airflow DAGs.
+
+3. **data-loading-bigquery**
+   - **Tasks**: 
+     - Set up Google BigQuery.
+     - Create a dataset in BigQuery.
+     - Use Airflow to load data from PostgreSQL to BigQuery.
+
+4. **dbt-transformations**
+   - **Tasks**: 
+     - Set up and configure dbt.
+     - Create dbt models for data transformation.
+
+5. **analytical-queries**
+   - **Tasks**: 
+     - Develop SQL queries or dashboards to answer the analytical questions.
+
+6. **documentation**
+   - **Tasks**: 
+     - Write detailed README and documentation for running the project.
+     - Explain each model and transformation in dbt.
+     - Prepare a report or presentation with the answers to the analytical questions.
+
+7. **docker-compose-setup**
+   - **Tasks**: 
+     - Create and configure the Docker Compose file to set up all project resources.
+
+8. **final-polish** (optional)
+   - **Tasks**: 
+     - Final code review and cleanup.
+     - Ensure all components work seamlessly together.
+     - Prepare for making the repository public.
+
+# Benefits of Using Feature Branches
+
+- **Isolation**: Each task is developed in isolation, reducing the risk of conflicts and errors.
+- **Parallel Development**: Different features can be developed concurrently by different team members.
+- **Clear History**: Commit history remains clear and organized, making it easier to track changes and revert if necessary.
+
+# Branch Management Tips
+
+- Regularly merge updates from the `main` branch into your feature branches to keep them up to date.
+- Use pull requests to merge feature branches back into `main` once the feature is complete and reviewed.
+- Consider using descriptive names for your branches to make it clear what each branch is for.
