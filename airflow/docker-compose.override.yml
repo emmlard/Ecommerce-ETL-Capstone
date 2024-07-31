@@ -1,0 +1,19 @@
+version: "3.1"
+
+services:
+  webserver:
+    environment:
+      AIRFLOW__CORE__TEST_CONNECTION: "Enabled"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: secretPassw0rd
+      POSTGRES_DB: ecommerce
+    networks:
+      - airflow
+    volumes:
+      - ../data-ingestion-postgresql/pg_data:/var/lib/postgres/data
+      - ../data-ingestion-postgresql/data:/data
+      - ../data-ingestion-postgresql/infra_setup/init.sql:/docker-entrypoint-initdb.d/init.sql
