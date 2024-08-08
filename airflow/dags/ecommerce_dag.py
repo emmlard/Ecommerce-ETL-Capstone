@@ -18,8 +18,8 @@ default_args = {
 # Access Airflow Variables
 PG_CONN = "myPostgresConnection"
 GCS_CONN = "myGcsConnection"
-BQ_PROJECT = "atlschool-demo"
-BQ_DATASET = "ecommerce"
+BQ_PROJECT = "automatic-asset"
+BQ_DATASET = "ecommerce_raw"
 SCHEMA = "raw"
 SCHEMA_PATH = "/usr/local/airflow/include/schema"
 
@@ -50,36 +50,36 @@ def pg_to_bq():
         task_id='start'
     )
 
-    ### Task to export order_items_dataset table to csv.gz in gcs
+    ### Task to export order_items table to csv.gz in gcs
     export_pg_data_to_gcs_order_items = PostgresToGCSOperator(
-        task_id='export_order_items_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.order_items_dataset",
-        bucket="raw-ecommerce",
-        filename='order_items_dataset.csv.gz',
+        task_id='export_order_items_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.order_items",
+        bucket="ecom-raw",
+        filename='order_items.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
         gzip=True,
         use_server_side_cursor=False,
     )
-    ### Task to export order_payments_dataset table to csv.gz in gcs
+    ### Task to export order_payments table to csv.gz in gcs
     export_pg_data_to_gcs_order_payments = PostgresToGCSOperator(
-        task_id='export_order_payments_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.order_payments_dataset",
-        bucket="raw-ecommerce",
-        filename='order_payments_dataset.csv.gz',
+        task_id='export_order_payments_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.order_payments",
+        bucket="ecom-raw",
+        filename='order_payments.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
         gzip=True,
         use_server_side_cursor=False,
     )
-    ### Task to export geolocation_dataset table to csv.gz in gcs
+    ### Task to export geolocation table to csv.gz in gcs
     export_pg_data_to_gcs_geolocation = PostgresToGCSOperator(
-        task_id='export_geolocation_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.geolocation_dataset",
-        bucket="raw-ecommerce",
-        filename='geolocation_dataset.csv.gz',
+        task_id='export_geolocation_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.geolocation",
+        bucket="ecom-raw",
+        filename='geolocation.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
@@ -87,12 +87,12 @@ def pg_to_bq():
         use_server_side_cursor=False,
     )
     
-    ### Task to export order_reviews_dataset table to csv.gz in gcs 
+    ### Task to export order_reviews table to csv.gz in gcs 
     export_pg_data_to_gcs_order_reviews = PostgresToGCSOperator(
-        task_id='export_order_reviews_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.order_reviews_dataset",
-        bucket="raw-ecommerce",
-        filename='order_reviews_dataset.csv.gz',
+        task_id='export_order_reviews_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.order_reviews",
+        bucket="ecom-raw",
+        filename='order_reviews.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
@@ -104,7 +104,7 @@ def pg_to_bq():
     export_pg_data_to_gcs_product_category_name_translation = PostgresToGCSOperator(
         task_id='export_product_category_name_translation_to_csv_gcs',
         sql=f"SELECT * FROM {SCHEMA}.product_category_name_translation",
-        bucket="raw-ecommerce",
+        bucket="ecom-raw",
         filename='product_category_name_translation.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
@@ -113,12 +113,12 @@ def pg_to_bq():
         use_server_side_cursor=False,
     )
 
-    ### Task to export sellers_dataset table to csv.gz in gcs
+    ### Task to export sellers table to csv.gz in gcs
     export_pg_data_to_gcs_sellers = PostgresToGCSOperator(
-        task_id='export_sellers_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.sellers_dataset",
-        bucket="raw-ecommerce",
-        filename='sellers_dataset.csv.gz',
+        task_id='export_sellers_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.sellers",
+        bucket="ecom-raw",
+        filename='sellers.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
@@ -126,12 +126,12 @@ def pg_to_bq():
         use_server_side_cursor=False,
     )
 
-    ### Task to export products_dataset table to csv.gz in gcs
+    ### Task to export products table to csv.gz in gcs
     export_pg_data_to_gcs_products = PostgresToGCSOperator(
-        task_id='export_products_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.products_dataset",
-        bucket="raw-ecommerce",
-        filename='products_dataset.csv.gz',
+        task_id='export_products_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.products",
+        bucket="ecom-raw",
+        filename='products.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
@@ -139,12 +139,12 @@ def pg_to_bq():
         use_server_side_cursor=False,
     )
 
-    ### Task to export customers_dataset table to csv.gz in gcs
+    ### Task to export customers table to csv.gz in gcs
     export_pg_data_to_gcs_customers = PostgresToGCSOperator(
-        task_id='export_customers_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.customers_dataset",
-        bucket="raw-ecommerce",
-        filename='customers_dataset.csv.gz',
+        task_id='export_customers_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.customers",
+        bucket="ecom-raw",
+        filename='customers.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
@@ -152,12 +152,12 @@ def pg_to_bq():
         use_server_side_cursor=False,
     )
 
-    ### Task to export orders_dataset table to csv.gz in gcs
+    ### Task to export orders table to csv.gz in gcs
     export_pg_data_to_gcs_orders = PostgresToGCSOperator(
-        task_id='export_orders_dataset_to_csv_gcs',
-        sql=f"SELECT * FROM {SCHEMA}.orders_dataset",
-        bucket="raw-ecommerce",
-        filename='orders_dataset.csv.gz',
+        task_id='export_orders_to_csv_gcs',
+        sql=f"SELECT * FROM {SCHEMA}.orders",
+        bucket="ecom-raw",
+        filename='orders.csv.gz',
         export_format='csv',
         gcp_conn_id=GCS_CONN,
         postgres_conn_id=PG_CONN,
@@ -165,13 +165,13 @@ def pg_to_bq():
         use_server_side_cursor=False,
     )
 
-    ## Task to load order_items_dataset.csv.gz from GCS Bucket to BigQuery
-    order_items_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_order_items_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'order_items_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.order_items_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/order_items_dataset.json"),
+    ## Task to load order_items.csv.gz from GCS Bucket to BigQuery
+    order_items_to_bq = GCSToBigQueryOperator(
+        task_id="export_order_items_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'order_items.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.order_items",
+        schema_fields=read_json(f"{SCHEMA_PATH}/order_items.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -183,13 +183,13 @@ def pg_to_bq():
         gcp_conn_id = GCS_CONN,
     )
 
-    ## Task to load order_payments_dataset.csv.gz from GCS Bucket to BigQuery
-    order_payments_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_order_payments_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'order_payments_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.order_payments_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/order_payments_dataset.json"),
+    ## Task to load order_payments.csv.gz from GCS Bucket to BigQuery
+    order_payments_to_bq = GCSToBigQueryOperator(
+        task_id="export_order_payments_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'order_payments.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.order_payments",
+        schema_fields=read_json(f"{SCHEMA_PATH}/order_payments.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -201,13 +201,13 @@ def pg_to_bq():
         gcp_conn_id = GCS_CONN,
     )
 
-    ## Task to load geolocation_dataset.csv.gz from GCS Bucket to BigQuery
-    geolocation_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_geolocation_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'geolocation_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.geolocation_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/geolocation_dataset.json"),
+    ## Task to load geolocation.csv.gz from GCS Bucket to BigQuery
+    geolocation_to_bq = GCSToBigQueryOperator(
+        task_id="export_geolocation_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'geolocation.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.geolocation",
+        schema_fields=read_json(f"{SCHEMA_PATH}/geolocation.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -219,13 +219,13 @@ def pg_to_bq():
         gcp_conn_id = GCS_CONN,
     )
 
-    ## Task to load order_reviews_dataset.csv.gz from GCS Bucket to BigQuery
-    order_reviews_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_order_reviews_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'order_reviews_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.order_reviews_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/order_reviews_dataset.json"),
+    ## Task to load order_reviews.csv.gz from GCS Bucket to BigQuery
+    order_reviews_to_bq = GCSToBigQueryOperator(
+        task_id="export_order_reviews_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'order_reviews.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.order_reviews",
+        schema_fields=read_json(f"{SCHEMA_PATH}/order_reviews.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -240,7 +240,7 @@ def pg_to_bq():
     ## Task to load product_category_name_translation.csv.gz from GCS Bucket to BigQuery
     product_category_name_translation_to_bq = GCSToBigQueryOperator(
         task_id="export_product_category_name_translation_to_bigquery",
-        bucket="raw-ecommerce",
+        bucket="ecom-raw",
         source_objects=[f'product_category_name_translation.csv.gz'],
         destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.product_category_name_translation",
         schema_fields=read_json(f"{SCHEMA_PATH}/product_category_name_translation.json"),
@@ -255,13 +255,13 @@ def pg_to_bq():
         gcp_conn_id = GCS_CONN,
     )
 
-    ## Task to load sellers_dataset.csv.gz from GCS Bucket to BigQuery
-    sellers_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_sellers_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'sellers_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.sellers_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/sellers_dataset.json"),
+    ## Task to load sellers.csv.gz from GCS Bucket to BigQuery
+    sellers_to_bq = GCSToBigQueryOperator(
+        task_id="export_sellers_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'sellers.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.sellers",
+        schema_fields=read_json(f"{SCHEMA_PATH}/sellers.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -273,13 +273,13 @@ def pg_to_bq():
         gcp_conn_id = GCS_CONN,
     )
 
-    ## Task to load products_dataset.csv.gz from GCS Bucket to BigQuery
-    products_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_products_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'products_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.products_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/products_dataset.json"),
+    ## Task to load products.csv.gz from GCS Bucket to BigQuery
+    products_to_bq = GCSToBigQueryOperator(
+        task_id="export_products_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'products.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.products",
+        schema_fields=read_json(f"{SCHEMA_PATH}/products.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -291,13 +291,13 @@ def pg_to_bq():
         gcp_conn_id = GCS_CONN,
     )
 
-    ## Task to load customers_dataset.csv.gz from GCS Bucket to BigQuery
-    customers_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_customers_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'customers_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.customers_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/customers_dataset.json"),
+    ## Task to load customers.csv.gz from GCS Bucket to BigQuery
+    customers_to_bq = GCSToBigQueryOperator(
+        task_id="export_customers_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'customers.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.customers",
+        schema_fields=read_json(f"{SCHEMA_PATH}/customers.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -309,13 +309,13 @@ def pg_to_bq():
         gcp_conn_id = GCS_CONN,
     )
 
-    ## Task to load orders_dataset.csv.gz from GCS Bucket to BigQuery
-    orders_dataset_to_bq = GCSToBigQueryOperator(
-        task_id="export_orders_dataset_to_bigquery",
-        bucket="raw-ecommerce",
-        source_objects=[f'orders_dataset.csv.gz'],
-        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.orders_dataset",
-        schema_fields=read_json(f"{SCHEMA_PATH}/orders_dataset.json"),
+    ## Task to load orders.csv.gz from GCS Bucket to BigQuery
+    orders_to_bq = GCSToBigQueryOperator(
+        task_id="export_orders_to_bigquery",
+        bucket="ecom-raw",
+        source_objects=[f'orders.csv.gz'],
+        destination_project_dataset_table=f"{BQ_PROJECT}.{BQ_DATASET}.orders",
+        schema_fields=read_json(f"{SCHEMA_PATH}/orders.json"),
         source_format='CSV',
         compression='GZIP',
         skip_leading_rows=1,
@@ -334,15 +334,15 @@ def pg_to_bq():
 
     chain(
         start_task,
-        export_pg_data_to_gcs_order_items, order_items_dataset_to_bq,
-        export_pg_data_to_gcs_order_payments, order_payments_dataset_to_bq,
-        export_pg_data_to_gcs_geolocation, geolocation_dataset_to_bq,
-        export_pg_data_to_gcs_order_reviews, order_reviews_dataset_to_bq,
+        export_pg_data_to_gcs_order_items, order_items_to_bq,
+        export_pg_data_to_gcs_order_payments, order_payments_to_bq,
+        export_pg_data_to_gcs_geolocation, geolocation_to_bq,
+        export_pg_data_to_gcs_order_reviews, order_reviews_to_bq,
         export_pg_data_to_gcs_product_category_name_translation, product_category_name_translation_to_bq,
-        export_pg_data_to_gcs_sellers, sellers_dataset_to_bq,
-        export_pg_data_to_gcs_products, products_dataset_to_bq,
-        export_pg_data_to_gcs_customers, customers_dataset_to_bq,
-        export_pg_data_to_gcs_orders, orders_dataset_to_bq,
+        export_pg_data_to_gcs_sellers, sellers_to_bq,
+        export_pg_data_to_gcs_products, products_to_bq,
+        export_pg_data_to_gcs_customers, customers_to_bq,
+        export_pg_data_to_gcs_orders, orders_to_bq,
         end_task
     )
 
