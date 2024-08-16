@@ -13,6 +13,8 @@ WITH sales AS (
 		{{ ref('stg_products') }} p
 	ON
 		oi.product_id = p.id
+	WHERE
+		o.status = 'delivered'
 )
 
 SELECT
