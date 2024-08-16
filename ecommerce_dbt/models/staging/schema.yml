@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+        description: "The primary key for the stg_customers table"
+
+  - name: stg_order_items
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: id
+        description: "Foreign key to the stg_orders table"
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: id
+        description: "Foreign key to the stg_products table"
+      - name: seller_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_sellers')
+              field: id
+        description: "Foreign key to the stg_sellers table"
+
+  - name: stg_orders
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+        description: "The primary key for the stg_orders table"
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: id
+        description: "Foreign key to the stg_customers table"
+        
+  - name: stg_products
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+        description: "The primary key for the stg_products table"
+      # - name: category_name
+      #   tests:
+      #     - relationships:
+      #         to: ref('stg_product_category')
+      #         field: category_name
+      #   description: "Foreign key to the stg_product_category table"
+      
+  # - name: stg_order_payments
+  #   columns:
+  #     - name: order_id
+  #       tests:
+  #         - not_null
+  #         - relationships:
+  #             to: ref('stg_orders')
+  #             field: id
+  #       description: "Foreign key to the stg_orders table"
+
+  # - name: stg_order_reviews
+  #   columns:
+  #     - name: order_id
+  #       tests:
+  #         - not_null
+  #         - relationships:
+  #             to: ref('stg_orders')
+  #             field: id
+  #       description: "Foreign key to the stg_orders table"
+
+  # - name: stg_product_category
+  #   columns:
+  #     - name: category_name
+  #       tests:
+  #         - unique
+  #         - not_null
+  #       description: "The primary key for the stg_product_category table"
+
+  # - name: stg_sellers
+  #   columns:
+  #     - name: id
+  #       tests:
+  #         - unique
+  #         - not_null
+  #       description: "The primary key for the stg_sellers table"

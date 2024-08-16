@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: ecommerce_raw
+    database: automatic-asset
+
+    tables:
+      - name: order_items
+      - name: products
+      - name: customers
+      - name: orders

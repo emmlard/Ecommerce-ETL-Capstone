@@ -1,3 +1,6 @@
 venv
 capstone_project_feature_branches.txt
 pg_data
+logs
+profiles.yml
+.env

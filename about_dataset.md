@@ -21,12 +21,12 @@ All text identifying stores and partners where replaced by the names of Game of 
 
 ## Example of a product listing on a marketplace
 
-![image](assets/sample.png)
+![image](data-ingestion-postgresql/assets/sample.png)
 
 ## Data Schema
 The data is divided in multiple datasets for better understanding and organization. Please refer to the following data schema when working with it:
 
-![image](assets/relationships.png)
+![image](data-ingestion-postgresql/assets/relationships.png)
 
 ## Classified Dataset
 We had previously released a classified dataset, but we removed it at Version 6. We intend to release it again as a new dataset with a new data schema. While we don't finish it, you may use the classified dataset available at the Version 5 or previous.
